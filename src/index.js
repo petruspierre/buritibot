@@ -2,7 +2,7 @@ const fs = require('fs');
 const { resolve } = require('path');
 const Discord = require('discord.js');
 
-const { token, prefix, defaultCooldown } = require('../config.json');
+const { prefix, defaultCooldown } = require('../config.json');
 
 const client = new Discord.Client();
 const cooldowns = new Discord.Collection();
@@ -90,4 +90,4 @@ function events() {
 
 events();
 
-client.login(token);
+client.login(process.env.TOKEN);
