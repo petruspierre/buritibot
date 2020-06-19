@@ -11,6 +11,8 @@
   "author": "Petrus",
   "license": "ISC",
   "dependencies": {
+    "ascii-art-font": "^1.0.2",
+    "ascii-art-table": "^1.0.1",
     "ascii-table": "^0.0.9",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0"
