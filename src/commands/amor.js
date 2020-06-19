@@ -16,8 +16,6 @@ module.exports = {
     const loveIndex = Math.floor(love / 10);
     const loveLevel = '❤️'.repeat(loveIndex) + '💔'.repeat(10 - loveIndex);
 
-    console.log(args);
-
     if (args.length === 1) {
       embed = new MessageEmbed()
         .setColor('#ffb6c1')
