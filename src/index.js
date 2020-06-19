@@ -82,7 +82,7 @@ function events() {
     const cargoPrincipal = member.guild.roles.cache.find((role) => role.name === 'wonkru');
     member.roles.add(cargoPrincipal);
 
-    channel.send(`Bem vindo ao ${member.guild.name}, ${member}`);
+    channel.send(`Bem vindo ao ${member.guild.name}, ${member}\nBeba bastante água 🥛`);
   });
 
   client.on('guildMemberRemove', (member) => {
