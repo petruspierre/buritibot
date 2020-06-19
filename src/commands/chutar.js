@@ -5,8 +5,9 @@ module.exports = {
   aliases: ['voadora', 'chuta'],
   description: 'Chutar alguem',
   usage: '<@alvo>',
+  cooldown: 5,
   args: true,
-  execute(message, args) {
+  execute(_, message, args) {
     if (!message.mentions.users.size) {
       return message.reply('você precisa marcar alguem para ser chutado');
     }
@@ -15,11 +16,12 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
       .setColor('#de3025')
       .setTitle('VOADORA')
-      .setAuthor(message.author.username, message.author.avatarURL)
-      .setDescription(`METEU-LHE UMA VOADORA EM ${target}`)
-      .setImage('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQKCpLo30w8_4hCD0UPSKzbAS2_K3fJNEVC_744fCGbgIsWOBS1&usqp=CAU')
+      .addField('TRETA', `${message.member.displayName.toUpperCase()} METEU-LHE UMA VOADORA EM ${target}`)
+      .setThumbnail('https://thumbs.gfycat.com/RepentantJitteryDogwoodtwigborer-size_restricted.gif')
       .setTimestamp();
 
-    message.channel.send(embed);
+    message.channel.send(embed).then((msg) => {
+      msg.react('👊🏼');
+    });
   },
 };

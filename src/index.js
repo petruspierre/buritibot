@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fs = require('fs');
 const { resolve } = require('path');
 const Discord = require('discord.js');
@@ -65,7 +66,7 @@ client.on('message', async (message) => {
   }
 
   try {
-    command.execute(message, args);
+    command.execute(client, message, args);
   } catch (error) {
     console.error(error);
     message.reply('ocorreu um erro ao tentar executar esse comando');
@@ -74,14 +75,18 @@ client.on('message', async (message) => {
 
 function events() {
   client.on('guildMemberAdd', (member) => {
-    const channel = member.guild.channels.cache.find((ch) => ch.name === 'entradas-e-saidas');
+    const channel = member.guild.channels.cache.find((ch) => ch.name === '🚪entradas-e-saidas');
+    member.setNickname(`${(member.displayName).toUpperCase()} WTFF`);
     if (!channel) return;
+
+    const cargoPrincipal = member.guild.roles.cache.find((role) => role.name === 'wonkru');
+    member.roles.add(cargoPrincipal);
 
     channel.send(`Bem vindo ao ${member.guild.name}, ${member}`);
   });
 
   client.on('guildMemberRemove', (member) => {
-    const channel = member.guild.channels.cache.find((ch) => ch.name === 'entradas-e-saidas');
+    const channel = member.guild.channels.cache.find((ch) => ch.name === '🚪entradas-e-saidas');
     if (!channel) return;
 
     channel.send(`${member} nos abandonou...`);
