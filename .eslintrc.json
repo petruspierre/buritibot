@@ -23,6 +23,7 @@
       "no-restricted-globals": "off",
       "radix": "off",
       "no-unused-vars": "warn",
-      "no-await-in-loop": "off"
+      "no-await-in-loop": "off",
+      "prefer-destructuring": "off"
     }
 }
