@@ -31,6 +31,10 @@ client.on('message', async (message) => {
 
   if (!command) return message.reply('não entendi, tem certeza que esse comando existe?');
 
+  if (command.disabled) {
+    return message.reply('esse comando está temporariamente desativado :(');
+  }
+
   if (command.args && !args.length) {
     let reply = 'preciso de mais informações para executar esse comando!';
 

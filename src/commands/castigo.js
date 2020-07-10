@@ -6,6 +6,7 @@ module.exports = {
   usage: '<@alvo>',
   cooldown: 120,
   args: true,
+  disabled: true,
   async execute(client, message, args) {
     const target = message.mentions.members.first();
 
