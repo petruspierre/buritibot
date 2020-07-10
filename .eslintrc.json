@@ -24,6 +24,8 @@
       "radix": "off",
       "no-unused-vars": "warn",
       "no-await-in-loop": "off",
-      "prefer-destructuring": "off"
+      "prefer-destructuring": "off",
+      "no-unused-expressions": "off",
+      "no-nested-ternary": "off"
     }
 }
