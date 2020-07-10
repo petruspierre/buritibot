@@ -1,5 +1,4 @@
 const { Canvas } = require('canvas-constructor');
-const { resolve } = require('path');
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
   aliases: ['morre', 'praga'],
   description: 'Cria uma imagem morre praga com o avatar ou o nome da pessoa ou imagem da internet',
   usage: '<@usuario> ou <nome> ou <link para imagem>',
-  cooldown: 60,
+  cooldown: 10,
   args: true,
   async execute(_, message, args) {
     const bg = await fetch('https://pbs.twimg.com/media/EWI1_WkWkAEcgul.jpg');
