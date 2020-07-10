@@ -40,7 +40,7 @@ module.exports = {
 
     client.on('messageReactionAdd', async (reaction, user) => {
       if (reaction.emoji.name === '✅') {
-        if (reaction.count >= 3) {
+        if (reaction.count >= 5) {
           target.roles.remove(cargoPrincipal);
           target.roles.remove(cargoSecundario);
           target.roles.add(cargoCastigo);
