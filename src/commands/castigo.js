@@ -6,7 +6,6 @@ module.exports = {
   usage: '<@alvo>',
   cooldown: 120,
   args: true,
-  disabled: true,
   async execute(client, message, args) {
     const target = message.mentions.members.first();
 
@@ -14,48 +13,58 @@ module.exports = {
       return message.reply('não consegui achar esse cara');
     }
 
-    const cargoPrincipal = message.guild.roles.cache.find((role) => role.name === 'wonkru');
-    const cargoSecundario = message.guild.roles.cache.find((role) => role.name === '🌈☄️');
-    const cargoCastigo = message.guild.roles.cache.find((role) => role.name === 'Castigo');
+    let cargos = target.roles.cache.array();
+    cargos = cargos.map((cargo) => cargo.name);
 
-    if (!cargoPrincipal) {
-      return message.reply('não encontrei o cargo wonkru');
-    }
-
-    if (!cargoCastigo) {
-      return message.reply('crie o cargo de castigo');
+    if (cargos.length === 1) {
+      return message.reply('vai com calma, esse usuário já está castigado!');
     }
 
     const embed = new MessageEmbed()
       .setColor('#de3025')
       .setTitle('Castigo')
-      .addField('Votação iniciada!', `Com cinco votos ${target} será castigado(a).\nVote pelas reações dessa mensagem!`)
+      .addField('Votação iniciada!', `Com quatro votos ${target} será castigado(a).\nA votação expira em 1 minuto.\nVote pelas reações dessa mensagem!`)
       .setFooter(`Pedido por ${message.member.user.tag}`)
       .setThumbnail('https://media.giphy.com/media/6BZaFXBVPBtok/giphy.gif')
       .setTimestamp();
 
     message.channel.send(embed).then((msg) => {
-      msg.react('✅');
-      msg.react('❌');
-    });
+      msg.react('✅').then(() => msg.react('❌'));
 
-    client.on('messageReactionAdd', async (reaction, user) => {
-      if (reaction.emoji.name === '✅') {
-        if (reaction.count >= 5) {
-          target.roles.remove(cargoPrincipal);
-          target.roles.remove(cargoSecundario);
-          target.roles.add(cargoCastigo);
+      const filter = (reaction, user) => ['✅', '❌'].includes(reaction.emoji.name) && user.bot === false;
 
-          message.channel.send(`${target.user.username} foi castigado por 5 minutos`);
-          reaction.remove();
+      msg.awaitReactions(filter, { max: 3, time: 60000, errors: ['time'] })
+        .then((collected) => {
+          const reaction = collected.first();
 
-          setTimeout(() => {
-            target.roles.add(cargoPrincipal);
-            target.roles.add(cargoSecundario);
-            target.roles.remove(cargoCastigo);
-          }, 300000);
-        }
-      }
+          if (reaction.emoji.name === '✅') {
+            cargos.forEach((cargo) => {
+              if (cargo !== '@everyone') {
+                const tempCargo = message.guild.roles.cache.find((role) => role.name === cargo);
+
+                target.roles.remove(tempCargo).catch((err) => message.channel.send('Não foi possível castigar este usuário'));
+              }
+            });
+
+            message.channel.send(`${target} foi castigado por 2 minutos!`);
+
+            setTimeout(() => {
+              cargos.forEach((cargo) => {
+                if (cargo !== '@everyone') {
+                  const tempCargo = message.guild.roles.cache.find((role) => role.name === cargo);
+
+                  target.roles.add(tempCargo).catch((err) => message.channel.send('Não foi possível castigar este usuário'));
+                }
+              });
+              message.channel.send(`${target} foi descastigado!`);
+            }, 120000);
+          } else {
+            message.channel.send('4 pessoas votaram ❌ e o castigo foi cancelado!');
+          }
+        })
+        .catch((collected) => {
+          message.reply('acabou o tempo e a votação não atingiu um resultado.\nO usuário não será castigado.');
+        });
     });
   },
 };

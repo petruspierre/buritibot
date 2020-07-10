@@ -16,6 +16,8 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
+const castigados = new Map();
+
 client.once('ready', () => {
   console.log('-> Buriti online');
 });
@@ -70,7 +72,12 @@ client.on('message', async (message) => {
   }
 
   try {
-    command.execute(client, message, args);
+    if (command.name === 'react') {
+      const serverCastigados = castigados.get(message.guild.id);
+      command.execute(client, message, args, serverCastigados, castigados);
+    } else {
+      command.execute(client, message, args);
+    }
   } catch (error) {
     console.error(error);
     message.reply('ocorreu um erro ao tentar executar esse comando');
