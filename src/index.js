@@ -17,7 +17,6 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
-  client.user.setActivity('veja os comandos com +ajuda', { type: 'STREAMING' });
   console.log('-> Buriti online');
 });
 
