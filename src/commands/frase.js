@@ -32,7 +32,7 @@ module.exports = {
         .addWrappedText(`— ${args.join(' ')}`, 30, 80, 300)
         .toBuffer();
 
-      message.channel.bulkDelete(1);
+      message.channel.bulkDelete(2);
 
       message.channel.send({ files: [img] }).catch((err) => {
         console.log(err);
@@ -57,7 +57,7 @@ module.exports = {
       .addWrappedText(`— ${args.slice(1).join(' ')}`, 30, 80, 300)
       .toBuffer();
 
-    message.channel.bulkDelete(1);
+    message.channel.bulkDelete(2);
 
     message.channel.send({ files: [img] }).catch((err) => {
       console.log(err);
