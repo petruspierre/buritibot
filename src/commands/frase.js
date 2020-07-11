@@ -14,6 +14,10 @@ module.exports = {
       'https://i.ibb.co/B3f3gJW/philo.png',
       'https://i.ibb.co/9gkQy9N/chaves.png',
       'https://i.ibb.co/k5qJ2LD/edukof.png',
+      'https://i.ibb.co/fv7bNw8/tony-stark.png',
+      'https://i.ibb.co/yYfCNDJ/dilma.png',
+      'https://i.ibb.co/CWtnVvt/holt.png',
+      'https://i.ibb.co/0jfQbxp/gilbala.png',
     ];
 
     const index = Math.floor(Math.random() * backgrounds.length);
