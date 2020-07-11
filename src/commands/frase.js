@@ -21,7 +21,6 @@ module.exports = {
     const bg = await fetch(backgrounds[index]);
     const bgBuffer = await bg.buffer();
 
-    message.channel.send('Carregando...');
     const target = message.mentions.members.first();
 
     if (!target) {
@@ -31,8 +30,6 @@ module.exports = {
         .setColor('#fff')
         .addWrappedText(`— ${args.join(' ')}`, 30, 80, 300)
         .toBuffer();
-
-      message.channel.bulkDelete(2);
 
       message.channel.send({ files: [img] }).catch((err) => {
         console.log(err);
@@ -56,8 +53,6 @@ module.exports = {
       .setTextSize(30)
       .addWrappedText(`— ${args.slice(1).join(' ')}`, 30, 80, 300)
       .toBuffer();
-
-    message.channel.bulkDelete(2);
 
     message.channel.send({ files: [img] }).catch((err) => {
       console.log(err);
