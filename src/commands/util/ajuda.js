@@ -1,4 +1,4 @@
-const { prefix, defaultCooldown } = require('../../config.json');
+const { prefix, defaultCooldown } = require('../../../config.json');
 
 module.exports = {
   name: 'ajuda',

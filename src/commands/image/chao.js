@@ -13,7 +13,9 @@ module.exports = {
 
     const target = message.mentions.members.first();
 
-    const avatar = await fetch(target.user.avatarURL({ format: 'jpg' }));
+    const avatarURL = target.user.avatarURL({ format: 'jpg' });
+
+    const avatar = await fetch(avatarURL || 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png');
 
     message.channel.send('Carregando...');
 
