@@ -16,8 +16,6 @@ for (const file of commandFiles) {
   client.commands.set(command.name, command);
 }
 
-const castigados = new Map();
-
 client.once('ready', () => {
   console.log('-> Buriti online');
 });
@@ -51,6 +49,13 @@ client.on('message', async (message) => {
     return message.reply('não realizo esse comando na DM, use em um servidor!');
   }
 
+  if (command.permissions) {
+    const author = message.guild.members.cache.get(message.author.id);
+    if (!(author.hasPermission(command.permissions))) {
+      return message.reply('você não tem permissão para realizar este comando');
+    }
+  }
+
   if (!cooldowns.has(command.name)) {
     cooldowns.set(command.name, new Discord.Collection());
   }
@@ -72,12 +77,8 @@ client.on('message', async (message) => {
   }
 
   try {
-    if (command.name === 'react') {
-      const serverCastigados = castigados.get(message.guild.id);
-      command.execute(client, message, args, serverCastigados, castigados);
-    } else {
-      command.execute(client, message, args);
-    }
+    if (command.needClient) command.execute(client, message, args, client);
+    else command.execute(client, message, args);
   } catch (error) {
     console.error(error);
     message.reply('ocorreu um erro ao tentar executar esse comando');
@@ -107,3 +108,5 @@ function events() {
 events();
 
 client.login(process.env.TOKEN);
+
+module.exports = client;
