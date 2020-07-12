@@ -1,5 +1,4 @@
 const Font = require('ascii-art-font');
-const { MessageEmbed } = require('discord.js');
 
 module.exports = {
   name: 'titulo',
@@ -7,6 +6,7 @@ module.exports = {
   description: 'Cria um título em ascii de até 6 caracteres',
   usage: '<titulo>',
   cooldown: 5,
+  disabled: true,
   args: true,
   async execute(_, message, args) {
     const title = args.join(' ');

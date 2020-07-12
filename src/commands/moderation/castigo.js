@@ -23,7 +23,7 @@ module.exports = {
     const embed = new MessageEmbed()
       .setColor('#de3025')
       .setTitle('Castigo')
-      .addField('Votação iniciada!', `Com quatro votos ${target} será castigado(a).\nA votação expira em 1 minuto.\nVote pelas reações dessa mensagem!`)
+      .addField('Votação iniciada!', `O alvo do castigo é ${target}\nA votação deverá receber **5 votos**, a maioria ganha\n\nA votação expira em 1 minuto.\n\nVote pelas reações dessa mensagem!`)
       .setFooter(`Pedido por ${message.member.user.tag}`)
       .setThumbnail('https://media.giphy.com/media/6BZaFXBVPBtok/giphy.gif')
       .setTimestamp();
@@ -33,11 +33,11 @@ module.exports = {
 
       const filter = (reaction, user) => ['✅', '❌'].includes(reaction.emoji.name) && user.bot === false;
 
-      msg.awaitReactions(filter, { max: 3, time: 60000, errors: ['time'] })
+      msg.awaitReactions(filter, { max: 5, time: 60000, errors: ['time'] })
         .then((collected) => {
-          const reaction = collected.first();
-
-          if (reaction.emoji.name === '✅') {
+          const upvote = collected.get('✅') || 0;
+          const downvote = collected.get('❌') || 0;
+          if (upvote.count > downvote.count) {
             cargos.forEach((cargo) => {
               if (cargo !== '@everyone') {
                 const tempCargo = message.guild.roles.cache.find((role) => role.name === cargo);
@@ -59,11 +59,11 @@ module.exports = {
               message.channel.send(`${target} foi descastigado!`);
             }, 120000);
           } else {
-            message.channel.send('4 pessoas votaram ❌ e o castigo foi cancelado!');
+            message.channel.send(`A maioria votou ❌ e o castigo para ${target} foi cancelado!`);
           }
         })
         .catch((collected) => {
-          message.reply('acabou o tempo e a votação não atingiu um resultado.\nO usuário não será castigado.');
+          message.reply(`acabou o tempo e a votação não atingiu um resultado.\n${target} não será castigado.`);
         });
     });
   },
