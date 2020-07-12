@@ -15,7 +15,7 @@ module.exports = {
       let target = message.mentions.members.first();
 
       if (!target) {
-        target = args[0];
+        target = args.join(' ');
         message.channel.send('Carregando...');
 
         if (target.includes('https://') || target.includes('http://')) {
@@ -37,7 +37,8 @@ module.exports = {
           .addImage(await bg.buffer(), 0, 0, 1080, 649)
           .setColor('#000000')
           .setTextSize(46)
-          .addText(target, 200, 335, 150)
+          .setTextAlign('center')
+          .addResponsiveText(target, 260, 335, 360)
           .toBuffer();
 
         message.channel.bulkDelete(2);
