@@ -1,4 +1,4 @@
-const getUserFromMention = require('../util/getUserFromMention');
+const getUserFromMention = require('../../util/getUserFromMention');
 
 module.exports = {
   name: 'kick',

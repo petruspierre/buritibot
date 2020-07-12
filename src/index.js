@@ -9,11 +9,14 @@ const client = new Discord.Client();
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
 
-const commandFiles = fs.readdirSync(resolve(__dirname, 'commands')).filter((file) => file.endsWith('.js'));
+const commandDir = fs.readdirSync(resolve(__dirname, 'commands'));
 
-for (const file of commandFiles) {
-  const command = require(resolve(__dirname, 'commands', file));
-  client.commands.set(command.name, command);
+for (const dir of commandDir) {
+  const commandFiles = fs.readdirSync(resolve(__dirname, 'commands', dir)).filter((file) => file.endsWith('.js'));
+  for (const file of commandFiles) {
+    const command = require(resolve(__dirname, 'commands', dir, file));
+    client.commands.set(command.name, command);
+  }
 }
 
 client.once('ready', () => {
