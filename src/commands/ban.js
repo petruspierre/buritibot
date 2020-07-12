@@ -1,10 +1,10 @@
 const getUserFromMention = require('../util/getUserFromMention');
 
 module.exports = {
-  name: 'kick',
-  description: 'Expulsar um usuário.',
+  name: 'ban',
+  description: 'Banir um usuário.',
   usage: '<@alvo> <motivo>',
-  permissions: ['KICK_MEMBERS'],
+  permissions: ['BAN_MEMBERS'],
   cooldown: 3,
   needClient: true,
   async execute(_, message, args, client) {
@@ -13,9 +13,9 @@ module.exports = {
 
     args = args.slice(1);
 
-    target.send(`Você foi expulso do servidor **${message.guild.name}** por: ${message.author}\n**Motivo**: ${args.join(' ')}`)
+    target.send(`Você foi banido do servidor **${message.guild.name}** por: ${message.author}\n**Motivo**: ${args.join(' ')}`)
       .then(() => {
-        target.kick(args.join(' '));
+        message.guild.members.ban(target, { reason: args.join(' ') });
       });
   },
 };
