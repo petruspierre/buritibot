@@ -15,7 +15,21 @@ module.exports = {
 
     target.send(`Você foi expulso do servidor **${message.guild.name}** por: ${message.author}\n**Motivo**: ${args.join(' ')}`)
       .then(() => {
-        target.kick(args.join(' '));
+        target.kick(args.join(' '))
+          .then(() => {
+            message.channel.send('O usuário foi expulso com **sucesso**.');
+          })
+          .catch((err) => {
+            message.channel.send('**Não** foi possível expulsar o usuário');
+          });
+      }).catch(() => {
+        message.guild.members.ban(target, { reason: args.join(' ') })
+          .then(() => {
+            message.channel.send('O usuário foi expulso com **sucesso**.');
+          })
+          .catch((err) => {
+            message.channel.send('**Não** foi possível expulsar o usuário');
+          });
       });
   },
 };

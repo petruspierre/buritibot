@@ -15,7 +15,13 @@ module.exports = {
 
     target.send(`Você foi banido do servidor **${message.guild.name}** por: ${message.author}\n**Motivo**: ${args.join(' ')}`)
       .then(() => {
-        message.guild.members.ban(target, { reason: args.join(' ') });
+        message.guild.members.ban(target, { reason: args.join(' ') })
+          .then(() => {
+            message.channel.send('O usuário foi banido com sucesso.');
+          })
+          .catch((err) => {
+            message.channel.send('Não foi possível banir o usuário');
+          });
       });
   },
 };
