@@ -124,7 +124,7 @@ function events() {
     const channel = member.guild.channels.cache.find((ch) => ch.name === '🚪entradas-e-saidas');
     if (!channel) return;
 
-    channel.send(`${member} nos abandonou...`);
+    channel.send(`${member.nickname} nos abandonou...`);
   });
 }
 
