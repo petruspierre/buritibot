@@ -7,7 +7,6 @@ module.exports = {
   description: 'Cria uma imagem morre praga com o avatar ou o nome da pessoa ou imagem da internet',
   usage: '<@usuario> ou <nome> ou <link para imagem>',
   category: 'Imagem',
-  category: 'Imagem',
   cooldown: 5,
   args: true,
   async execute(_, message, args) {

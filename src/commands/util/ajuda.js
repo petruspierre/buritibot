@@ -47,16 +47,9 @@ module.exports = {
       .setColor('#ffe467')
       .setTitle(`Informação de comando - \`${command.name}\``)
       .addField('Como usar:', `\`${prefix}${command.name} ${command.usage}\``)
+      .addField('Sinônimos:', `\`${(command.aliases).join('`, `')}\``)
       .setDescription(command.description)
       .setFooter('<> indica campos obrigatórios e [] opcionais');
-
-    data.push(`**Nome:** ${command.name}`);
-
-    if (command.aliases) data.push(`**Sinônimos:** ${command.aliases.join(', ')}`);
-    if (command.description) data.push(`**Descrição:** ${command.description}`);
-    if (command.usage) data.push(`**Uso:** \`${prefix}${command.name} ${command.usage}\``);
-
-    data.push(`**Cooldown:** ${command.cooldown || defaultCooldown} segundos`);
 
     message.channel.send(embed);
   },
