@@ -58,9 +58,8 @@ module.exports = {
         .setTimestamp()
         .setURL(song.url)
         .setFooter(`Pedido por ${message.member.user.tag}`);
-      squeue.textChannel.bulkDelete(1).then(() => {
-        squeue.textChannel.send(embed);
-      });
+
+      squeue.textChannel.send(embed);
     }
 
     async function process(id) {
@@ -73,8 +72,6 @@ module.exports = {
         thumb: songInfo.videoDetails.thumbnail.thumbnails[0].url,
         length: songInfo.videoDetails.lengthSeconds,
       };
-
-      channel.bulkDelete(1);
 
       if (!serverQueue) {
         const queueContract = {
@@ -143,8 +140,6 @@ module.exports = {
 
               let videoID;
 
-              channel.bulkDelete(1);
-
               if (reaction.emoji.name === '1️⃣') {
                 videoID = result.items[0].id.videoId;
                 process(videoID);
@@ -155,6 +150,7 @@ module.exports = {
                 videoID = result.items[2].id.videoId;
                 process(videoID);
               } else {
+                msg.delete();
                 const secondPage = new MessageEmbed()
                   .setColor('#15e5e0')
                   .setTitle(`Resultados encontrados para: \`${args.join(' ')}\``);
@@ -163,9 +159,44 @@ module.exports = {
                   if (index >= 3) secondPage.addField(`#${index + 1} - ${item.snippet.title}`, `${item.snippet.channelTitle}`);
                 });
 
-                channel.bulkDelete(1);
+                channel.send(secondPage).then((secondMsg) => {
+                  secondMsg.react('4️⃣')
+                    .then(() => {
+                      secondMsg.react('5️⃣')
+                        .then(() => secondMsg.react('6️⃣')
+                          .then(() => {
+                            secondMsg.react('✖️')
+                              .catch((_) => {});
+                          }))
+                        .catch((_) => {});
+                    })
+                    .catch((_) => {});
 
-                channel.send(secondPage);
+                  const secondFilter = (secondReaction, user) => ['4️⃣', '5️⃣', '6️⃣', '✖️']
+                    .includes(secondReaction.emoji.name) && user.id === message.author.id;
+
+                  secondMsg.awaitReactions(secondFilter, { max: 1, time: 60000, errors: ['time'] })
+                    .then((secondCollected) => {
+                      const secondReaction = secondCollected.first();
+
+                      if (secondReaction.emoji.name === '4️⃣') {
+                        videoID = result.items[3].id.videoId;
+                        process(videoID);
+                      } else if (secondReaction.emoji.name === '5️⃣') {
+                        videoID = result.items[4].id.videoId;
+                        process(videoID);
+                      } else if (secondReaction.emoji.name === '6️⃣') {
+                        videoID = result.items[5].id.videoId;
+                        process(videoID);
+                      } else {
+                        message.reply('sua escolha foi cancelada!');
+                        secondMsg.delete();
+                      }
+                    })
+                    .catch((secondCollected) => {
+                      message.reply('acabou o tempo e você não escolheu uma música. Nada será adicionado à fila.');
+                    });
+                });
               }
             })
             .catch((collected) => {

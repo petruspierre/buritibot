@@ -22,7 +22,7 @@
       "no-param-reassign": "off",
       "no-restricted-globals": "off",
       "radix": "off",
-      "no-unused-vars": "warn",
+      "no-unused-vars": "off",
       "no-await-in-loop": "off",
       "prefer-destructuring": "off",
       "no-unused-expressions": "off",

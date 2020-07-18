@@ -91,11 +91,17 @@ client.on('message', async (message) => {
 
   try {
     if (command.category === 'Música') {
+      const channel = message.guild.channels.cache.find((ch) => ch.name === '🎶bot-de-musica');
+      if (!channel) return message.reply('Por favor crie o canal `🎶bot-de-musica`');
+      if (message.channel.name !== '🎶bot-de-musica') return message.reply(`Por favor utilize o canal ${channel}`);
+
       const serverQueue = queue.get(message.guild.id);
       command.execute(client, message, args, serverQueue, queue, youtube);
+    } else if (command.needClient) {
+      command.execute(client, message, args, client);
+    } else {
+      command.execute(client, message, args);
     }
-    if (command.needClient) command.execute(client, message, args, client);
-    else command.execute(client, message, args);
   } catch (error) {
     console.error(error);
     message.reply('ocorreu um erro ao tentar executar esse comando');
