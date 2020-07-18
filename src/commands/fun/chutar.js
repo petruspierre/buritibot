@@ -5,6 +5,7 @@ module.exports = {
   aliases: ['voadora', 'chuta'],
   description: 'Chutar alguem',
   usage: '<@alvo>',
+  category: 'Diversão',
   cooldown: 5,
   args: true,
   execute(_, message, args) {

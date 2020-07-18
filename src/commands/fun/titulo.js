@@ -5,6 +5,7 @@ module.exports = {
   aliases: ['banner', 'ascii'],
   description: 'Cria um título em ascii de até 6 caracteres',
   usage: '<titulo>',
+  category: 'Diversão',
   cooldown: 5,
   disabled: true,
   args: true,

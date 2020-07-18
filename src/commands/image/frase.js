@@ -4,8 +4,9 @@ const fetch = require('node-fetch');
 module.exports = {
   name: 'frase',
   aliases: ['frase', 'cita'],
-  description: 'Faz uma citação de Albert Einsten',
+  description: 'Cria uma citação de apenas grandes pensadores do mundo moderno',
   usage: '<frase>',
+  category: 'Imagem',
   cooldown: 10,
   args: true,
   async execute(_, message, args) {

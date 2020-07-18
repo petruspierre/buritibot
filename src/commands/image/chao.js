@@ -6,6 +6,7 @@ module.exports = {
   aliases: ['lava', 'ochãoé'],
   description: 'Cria uma imagem o chão é... com a imagem de alguém',
   usage: '<@usuario> <chão>',
+  category: 'Imagem',
   cooldown: 10,
   args: true,
   async execute(_, message, args) {

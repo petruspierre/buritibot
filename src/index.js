@@ -2,12 +2,18 @@ require('dotenv').config();
 const fs = require('fs');
 const { resolve } = require('path');
 const Discord = require('discord.js');
+const YouTube = require('youtube-node');
 
 const { prefix, defaultCooldown } = require('../config.json');
 
 const client = new Discord.Client();
 const cooldowns = new Discord.Collection();
 client.commands = new Discord.Collection();
+
+const youtube = new YouTube();
+youtube.setKey(process.env.YOUTUBE_KEY);
+
+const queue = new Map();
 
 const commandDir = fs.readdirSync(resolve(__dirname, 'commands'));
 
@@ -52,6 +58,10 @@ client.on('message', async (message) => {
     return message.reply('não realizo esse comando na DM, use em um servidor!');
   }
 
+  if (command.dmOnly && message.channel.type !== 'dm') {
+    return message.reply('não realizo esse comando em um servidor, use a DM!');
+  }
+
   if (command.permissions) {
     const author = message.guild.members.cache.get(message.author.id);
     if (!(author.hasPermission(command.permissions))) {
@@ -80,8 +90,18 @@ client.on('message', async (message) => {
   }
 
   try {
-    if (command.needClient) command.execute(client, message, args, client);
-    else command.execute(client, message, args);
+    if (command.category === 'Música') {
+      const channel = message.guild.channels.cache.find((ch) => ch.name === '🎶bot-de-musica');
+      if (!channel) return message.reply('Por favor crie o canal `🎶bot-de-musica`');
+      if (message.channel.name !== '🎶bot-de-musica') return message.reply(`Por favor utilize o canal ${channel}`);
+
+      const serverQueue = queue.get(message.guild.id);
+      command.execute(client, message, args, serverQueue, queue, youtube);
+    } else if (command.needClient) {
+      command.execute(client, message, args, client);
+    } else {
+      command.execute(client, message, args);
+    }
   } catch (error) {
     console.error(error);
     message.reply('ocorreu um erro ao tentar executar esse comando');

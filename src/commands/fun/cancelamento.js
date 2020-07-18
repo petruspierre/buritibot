@@ -5,6 +5,7 @@ module.exports = {
   aliases: ['cancela'],
   description: 'Cancela alguém por motivos de ...',
   usage: '<@alvo> [motivo]',
+  category: 'Diversão',
   cooldown: 5,
   args: true,
   async execute(_, message, args) {

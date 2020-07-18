@@ -3,6 +3,7 @@ module.exports = {
   aliases: ['pergunte', 'oraculo'],
   description: 'Faça uma pergunta ao grande mestre da sabedoria Buriti.',
   usage: '<pergunta>',
+  category: 'Diversão',
   cooldown: 3,
   async execute(_, message, args) {
     const result = Math.floor(Math.random() * 2);
