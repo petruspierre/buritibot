@@ -6,6 +6,7 @@ module.exports = {
   aliases: ['frase', 'cita'],
   description: 'Faz uma citação de Albert Einsten',
   usage: '<frase>',
+  category: 'Imagem',
   cooldown: 10,
   args: true,
   async execute(_, message, args) {

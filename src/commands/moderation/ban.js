@@ -4,6 +4,7 @@ module.exports = {
   name: 'ban',
   description: 'Banir um usuário.',
   usage: '<@alvo> <motivo>',
+  category: 'Moderação',
   permissions: ['BAN_MEMBERS'],
   cooldown: 3,
   needClient: true,

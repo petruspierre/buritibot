@@ -6,6 +6,7 @@ module.exports = {
   aliases: ['aiai'],
   description: 'Passa pano para alguém',
   usage: '<alguem | algo> ou <@usuario> <alguem | algo>',
+  category: 'Imagem',
   cooldown: 5,
   args: true,
   async execute(_, message, args) {

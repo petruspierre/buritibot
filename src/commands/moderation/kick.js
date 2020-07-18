@@ -4,6 +4,7 @@ module.exports = {
   name: 'kick',
   description: 'Expulsar um usuário.',
   usage: '<@alvo> <motivo>',
+  category: 'Moderação',
   permissions: ['KICK_MEMBERS'],
   cooldown: 3,
   needClient: true,

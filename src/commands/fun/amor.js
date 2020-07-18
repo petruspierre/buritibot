@@ -5,6 +5,7 @@ module.exports = {
   aliases: ['shipp', 'love'],
   description: 'Calcular o amor entre duas pessoas',
   usage: '<@alvo> ou <@alvo 1> <@alvo 2>',
+  category: 'Diversão',
   cooldown: 5,
   args: true,
   async execute(_, message, args) {

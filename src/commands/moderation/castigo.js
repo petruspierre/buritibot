@@ -4,6 +4,7 @@ module.exports = {
   name: 'castigo',
   description: 'Castiga uma pessoa',
   usage: '<@alvo>',
+  category: 'Moderação',
   cooldown: 120,
   args: true,
   async execute(client, message, args) {

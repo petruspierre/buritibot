@@ -5,6 +5,7 @@ module.exports = {
   aliases: ['ppt', 'jokenpo'],
   description: 'Joga pedra papel ou tesoura',
   usage: '<pedra | papel | tesoura>',
+  category: 'Jogos',
   cooldown: 3,
   args: true,
   async execute(_, message, _args) {
