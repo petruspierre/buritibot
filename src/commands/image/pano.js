@@ -6,11 +6,22 @@ module.exports = {
   aliases: ['aiai'],
   description: 'Passa pano para alguém',
   usage: '[@usuário] <alguem | algo>',
+  flags: ['-a', '-o'],
   category: 'Imagem',
   cooldown: 5,
   args: true,
   async execute(_, message, args) {
     const bg = await fetch('https://i.pinimg.com/736x/bd/1b/8a/bd1b8a5cf03ed3a414fe19b0312010a9.jpg');
+
+    let suffix = 'e';
+
+    if (args[args.length - 1] === '-a') {
+      suffix = 'a';
+      args.splice(args.length - 1, 1);
+    } else if (args[args.length - 1] === '-o') {
+      suffix = 'o';
+      args.splice(args.length - 1, 1);
+    }
 
     const target = message.mentions.members.first();
 
@@ -20,7 +31,7 @@ module.exports = {
         .setTextSize(34)
         .setColor('#fff')
         .setTextAlign('center')
-        .addResponsiveText(`aiai esse ${args.join(' ')}`, 530, 300, 260)
+        .addResponsiveText(`aiai ess${suffix} ${args.join(' ')}`, 530, 300, 260)
         .toBuffer();
 
       message.channel.bulkDelete(1);
@@ -49,7 +60,7 @@ module.exports = {
       .setTextSize(34)
       .setColor('#fff')
       .setTextAlign('center')
-      .addResponsiveText(`aiai esse ${title.join(' ')}`, 530, 300, 260)
+      .addResponsiveText(`aiai ess${suffix} ${title.join(' ')}`, 530, 300, 260)
       .toBuffer();
 
     message.channel.bulkDelete(1);

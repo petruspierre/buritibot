@@ -7,7 +7,7 @@ module.exports = {
   description: 'Lista todos os comandos ou mostra mais informações sobre um específico.',
   usage: '[comando]',
   category: 'Util',
-  cooldown: 10,
+  cooldown: 3,
   execute(_, message, args) {
     const data = [];
     const { commands } = message.client;
@@ -47,9 +47,19 @@ module.exports = {
       .setColor('#ffe467')
       .setTitle(`Informação de comando - \`${command.name}\``)
       .addField('Como usar:', `\`${prefix}${command.name} ${command.usage}\``)
-      .addField('Sinônimos:', `\`${(command.aliases).join('`, `')}\``)
+
       .setDescription(command.description)
       .setFooter('<> indica campos obrigatórios e [] opcionais');
+
+    if (command.cooldown) {
+      embed.addField('Intervalo de uso:', `**${command.cooldown}** segundos`);
+    }
+    if (command.aliases) {
+      embed.addField('Sinônimos:', `\`+${(command.aliases).join('`, +`')}\``);
+    }
+    if (command.flags) {
+      embed.addField('Flags:', `\`${(command.flags).join('`, `')}\`\nPara usar as flags, insira no **final** do comando!`);
+    }
 
     message.channel.send(embed);
   },
