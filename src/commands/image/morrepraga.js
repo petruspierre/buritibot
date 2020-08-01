@@ -17,7 +17,6 @@ module.exports = {
 
       if (!target) {
         target = args.join(' ');
-        message.channel.send('Carregando...');
 
         if (target.includes('https://') || target.includes('http://')) {
           const avatar = await fetch(args[0]);
@@ -26,7 +25,6 @@ module.exports = {
             .addCircularImage(await avatar.buffer(), 270, 330, 120)
             .toBuffer();
 
-          message.channel.bulkDelete(2);
           message.channel.send({ files: [img] }).catch((err) => {
             console.log(err);
             message.reply('não consegui fazer esta imagem');
@@ -42,7 +40,6 @@ module.exports = {
           .addResponsiveText(target, 260, 335, 360)
           .toBuffer();
 
-        message.channel.bulkDelete(2);
         message.channel.send({ files: [img] }).catch((err) => {
           console.log(err);
           message.reply('não consegui fazer esta imagem');
@@ -55,16 +52,12 @@ module.exports = {
 
       const avatar = await fetch(avatarURL || 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png');
 
-      message.channel.send('Carregando...');
-
       const img = new Canvas(1080, 649)
         .addImage(await bg.buffer(), 0, 0, 1080, 649)
         .addCircularImage(await avatar.buffer(), 280, 330, 100)
         .setTextSize(30)
         .addText(target.user.username, 230, 460, 120)
         .toBuffer();
-
-      message.channel.bulkDelete(2);
 
       message.channel.send({ files: [img] }).catch((err) => {
         console.log(err);
