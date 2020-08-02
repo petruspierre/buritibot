@@ -34,8 +34,6 @@ module.exports = {
         .addResponsiveText(`aiai ess${suffix} ${args.join(' ')}`, 530, 300, 260)
         .toBuffer();
 
-      message.channel.bulkDelete(1);
-
       message.channel.send({ files: [img] }).catch((err) => {
         console.log(err);
         message.reply('não consegui fazer esta imagem');
