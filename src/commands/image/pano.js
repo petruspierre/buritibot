@@ -6,7 +6,7 @@ module.exports = {
   aliases: ['aiai'],
   description: 'Passa pano para alguém',
   usage: '[@usuário] <alguem | algo>',
-  flags: ['-a', '-o'],
+  flags: ['-a', '-u'],
   category: 'Imagem',
   cooldown: 5,
   args: true,
@@ -18,8 +18,8 @@ module.exports = {
     if (args[args.length - 1] === '-a') {
       suffix = 'a';
       args.splice(args.length - 1, 1);
-    } else if (args[args.length - 1] === '-o') {
-      suffix = 'o';
+    } else if (args[args.length - 1] === '-u') {
+      suffix = 'u';
       args.splice(args.length - 1, 1);
     }
 
