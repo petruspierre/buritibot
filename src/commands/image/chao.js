@@ -18,8 +18,6 @@ module.exports = {
 
     const avatar = await fetch(avatarURL || 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png');
 
-    message.channel.send('Carregando...');
-
     const title = args.slice(1);
 
     const avatarBuffer = await avatar.buffer();
@@ -32,8 +30,6 @@ module.exports = {
       .addText(`- o chão é ${title.join(' ')}`, 45, 50, 600)
       .addText(`- ${target.user.username}:`, 45, 100, 600)
       .toBuffer();
-
-    message.channel.bulkDelete(1);
 
     message.channel.send({ files: [img] }).catch((err) => {
       console.log(err);

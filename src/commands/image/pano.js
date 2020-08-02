@@ -6,7 +6,7 @@ module.exports = {
   aliases: ['aiai'],
   description: 'Passa pano para alguém',
   usage: '[@usuário] <alguem | algo>',
-  flags: ['-a', '-o'],
+  flags: ['-a', '-u'],
   category: 'Imagem',
   cooldown: 5,
   args: true,
@@ -18,8 +18,8 @@ module.exports = {
     if (args[args.length - 1] === '-a') {
       suffix = 'a';
       args.splice(args.length - 1, 1);
-    } else if (args[args.length - 1] === '-o') {
-      suffix = 'o';
+    } else if (args[args.length - 1] === '-u') {
+      suffix = 'u';
       args.splice(args.length - 1, 1);
     }
 
@@ -48,8 +48,6 @@ module.exports = {
 
     const avatar = await fetch(avatarURL || 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png');
 
-    message.channel.send('Carregando...');
-
     const title = args.slice(1);
 
     const avatarBuffer = await avatar.buffer();
@@ -62,8 +60,6 @@ module.exports = {
       .setTextAlign('center')
       .addResponsiveText(`aiai ess${suffix} ${title.join(' ')}`, 530, 300, 260)
       .toBuffer();
-
-    message.channel.bulkDelete(1);
 
     message.channel.send({ files: [img] }).catch((err) => {
       console.log(err);
