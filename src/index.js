@@ -111,7 +111,7 @@ client.on('message', async (message) => {
 });
 
 bot.on('message', async (msg) => {
-  const content = msg.text.toString().toLowerCase();
+  const content = msg.text.toLowerCase();
   if (!content.startsWith(prefix)) return;
 
   const args = content.slice(prefix.length).split(/ +/);
