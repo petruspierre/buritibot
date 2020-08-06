@@ -130,10 +130,10 @@ bot.on('message', async (msg) => {
     let reply = 'Preciso de mais informações para executar esse comando!';
 
     if (command.usage) {
-      reply += `\nA maneira correta é: ${prefix}${command.name} ${command.usage}`;
+      reply += `\nA maneira correta é: \`\`\` ${prefix}${command.name} ${command.usage}\`\`\``;
     }
 
-    return bot.sendMessage(msg.chat.id, reply);
+    return bot.sendMessage(msg.chat.id, reply, { parse_mode: 'Markdown' });
   }
 
   try {
