@@ -83,10 +83,10 @@ module.exports = {
 
     bot.sendMessage(
       msg.chat.id,
-      `${finalMsg}\!\nVocê jogou __${_args[0]}__ e eu ${playString}`,
+      `${finalMsg}!!\nVocê jogou *${_args[0]}* e eu *${playString}*`,
       {
         reply_to_message_id: msg.message_id,
-        parse_mode: 'MarkdownV2',
+        parse_mode: 'Markdown',
       },
     );
   },
