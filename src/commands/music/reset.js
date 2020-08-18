@@ -14,8 +14,7 @@ module.exports = {
       );
     }
 
-    serverQueue.songs = [];
-    serverQueue.connection.dispatcher.end();
+    serverQueue = {};
     return message.channel.send('Resetando!');
   },
 };
