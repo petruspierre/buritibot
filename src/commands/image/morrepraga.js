@@ -69,7 +69,7 @@ module.exports = {
     }
   },
   async execute_telegram(bot, msg, args) {
-    const bg = await fetch('https://pbs.twimg.com/media/EWI1_WkWkAEcgul.jpg');
+    const bg = await fetch('https://i.ibb.co/PWpFskt/New-Project.png');
 
     if (msg.entities && msg.entities[0].type === 'text_mention') {
       const entity = msg.entities[0];
