@@ -12,7 +12,7 @@ module.exports = {
   args: true,
   async execute(_, message, args) {
     try {
-      const bg = await fetch('https://pbs.twimg.com/media/EWI1_WkWkAEcgul.jpg');
+      const bg = await fetch('https://i.ibb.co/PWpFskt/New-Project.png');
 
       let target = message.mentions.members.first();
 
