@@ -7,8 +7,7 @@ module.exports = {
   category: 'Moderação',
   permissions: ['KICK_MEMBERS'],
   cooldown: 3,
-  needClient: true,
-  async execute(_, message, args, client) {
+  async execute(client, message, args) {
     const rawTarget = getUserFromMention(args[0], client);
     const target = message.guild.members.cache.get(rawTarget.id);
 

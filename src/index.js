@@ -16,6 +16,7 @@ const youtube = new YouTube();
 youtube.setKey(process.env.YOUTUBE_KEY);
 
 const queue = new Map();
+const bingo = new Map();
 
 const commandDir = fs.readdirSync(resolve(__dirname, 'commands'));
 
@@ -99,8 +100,8 @@ client.on('message', async (message) => {
 
       const serverQueue = queue.get(message.guild.id);
       command.execute(client, message, args, serverQueue, queue, youtube);
-    } else if (command.needClient) {
-      command.execute(client, message, args, client);
+    } else if (command.name === 'bingo') {
+      command.execute(client, message, args, bingo);
     } else {
       command.execute(client, message, args);
     }
