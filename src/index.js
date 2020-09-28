@@ -101,7 +101,8 @@ client.on('message', async (message) => {
       const serverQueue = queue.get(message.guild.id);
       command.execute(client, message, args, serverQueue, queue, youtube);
     } else if (command.name === 'bingo') {
-      command.execute(client, message, args, bingo);
+      const serverBingo = bingo.get(message.guild.id);
+      command.execute(client, message, args, serverBingo, bingo);
     } else {
       command.execute(client, message, args);
     }
