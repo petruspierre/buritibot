@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const TelegramBot = require('node-telegram-bot-api');
 const YouTube = require('youtube-node');
 
-const { prefix, defaultCooldown } = require('../config.json');
+const { prefix, defaultCooldown, serverID } = require('../config.json');
 
 const bot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
 const client = new Discord.Client();
@@ -16,6 +16,7 @@ const youtube = new YouTube();
 youtube.setKey(process.env.YOUTUBE_KEY);
 
 const queue = new Map();
+const bingo = new Map();
 
 const commandDir = fs.readdirSync(resolve(__dirname, 'commands'));
 
@@ -64,7 +65,7 @@ client.on('message', async (message) => {
     return message.reply('não realizo esse comando em um servidor, use a DM!');
   }
 
-  if (command.permissions) {
+  if (command.permissions && message.channel.type !== 'dm') {
     const author = message.guild.members.cache.get(message.author.id);
     if (!(author.hasPermission(command.permissions))) {
       return message.reply('você não tem permissão para realizar este comando');
@@ -99,8 +100,14 @@ client.on('message', async (message) => {
 
       const serverQueue = queue.get(message.guild.id);
       command.execute(client, message, args, serverQueue, queue, youtube);
-    } else if (command.needClient) {
-      command.execute(client, message, args, client);
+    } else if (command.name === 'bingo') {
+      let serverBingo;
+      if (message.channel.type !== 'dm') {
+        serverBingo = bingo.get(message.guild.id);
+      } else {
+        serverBingo = bingo.get(serverID);
+      }
+      command.execute(client, message, args, serverBingo, bingo);
     } else {
       command.execute(client, message, args);
     }
@@ -162,7 +169,7 @@ function events() {
     const channel = member.guild.channels.cache.find((ch) => ch.name === '🚪entradas-e-saidas');
     if (!channel) return;
 
-    channel.send(`${member.nickname} nos abandonou...`);
+    channel.send(`${member.nickname || member.displayName} nos abandonou...`);
   });
 }
 
