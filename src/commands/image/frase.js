@@ -57,7 +57,7 @@ module.exports = {
       .addCircularImage(await avatar.buffer(), 480, 150, 80)
       .setColor('#fff')
       .setTextSize(24)
-      .addText(target.user.username, 30, 255, 100)
+      .addText(target.nickname || target.user.username, 30, 255, 100)
       .setTextSize(30)
       .addWrappedText(`— ${args.slice(1).join(' ')}`, 30, 80, 300)
       .toBuffer();
