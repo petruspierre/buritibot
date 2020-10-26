@@ -57,7 +57,7 @@ module.exports = {
         .addImage(await bg.buffer(), 0, 0, 1080, 649)
         .addCircularImage(await avatar.buffer(), 280, 330, 100)
         .setTextSize(30)
-        .addText(target.user.username, 230, 460, 120)
+        .addText(target.nickname || target.user.username, 230, 460, 120)
         .toBuffer();
 
       message.channel.send({ files: [img] }).catch((err) => {

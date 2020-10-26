@@ -28,7 +28,7 @@ module.exports = {
       .addCircularImage(avatarBuffer, 720, 170, 35)
       .setTextSize(42)
       .addText(`- o chão é ${title.join(' ')}`, 45, 50, 600)
-      .addText(`- ${target.user.username}:`, 45, 100, 600)
+      .addText(`- ${target.nickname || target.user.username}:`, 45, 100, 600)
       .toBuffer();
 
     message.channel.send({ files: [img] }).catch((err) => {
