@@ -28,9 +28,11 @@ module.exports = {
         username: target.nickname || target.user.username,
         avatarURL: avatarURL || 'https://discordapp.com/assets/322c936a8c8be1b803cd94861bdfa868.png',
       });
+
+      message.delete();
     } catch (err) {
       console.log(err);
-      message.channel.send('nao funcionou');
+      message.channel.send('Não funcionou, tente em outro canal.');
     }
   },
 };
