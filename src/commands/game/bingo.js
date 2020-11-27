@@ -8,7 +8,7 @@ module.exports = {
   usage: '<start | next>',
   category: 'Jogos',
   args: true,
-  disabled: true,
+  disabled: false,
   cooldown: 3,
   async execute(_, message, args, serverGame, bingo) {
     if (args[0] === 'start') {
