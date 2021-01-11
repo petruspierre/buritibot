@@ -25,7 +25,7 @@ const createPlayer = (user) => {
 const start = async (serverGame) => {
   const { users, channel } = serverGame;
 
-  const bg = await fetch('https://i.ibb.co/WKjRRQS/bingo.png');
+  const bg = await fetch('https://i.ibb.co/HP0yZvv/bingo300.png');
   const bgBuffer = await bg.buffer();
 
   users.forEach(({ user, numbers }) => {
