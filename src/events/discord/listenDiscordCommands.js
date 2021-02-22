@@ -1,17 +1,13 @@
 import Discord from 'discord.js';
-import YouTube from 'youtube-node';
 
 import validateDiscordMessage from '../../validators/validateDiscordMessage';
 import { prefix, serverID } from '../../../config.json';
-
-const youtube = new YouTube();
-youtube.setKey(process.env.YOUTUBE_KEY);
 
 const queue = new Map();
 const bingo = new Map();
 const cooldowns = new Discord.Collection();
 
-function listenDiscordCommands(client) {
+function listenDiscordCommands(client, youtube) {
   client.on('message', async (message) => {
     if (!validateDiscordMessage(message, client, cooldowns)) return;
 
