@@ -27,6 +27,7 @@
       "prefer-destructuring": "off",
       "no-unused-expressions": "off",
       "no-nested-ternary": "off",
-      "no-useless-escape": "off"
+      "no-useless-escape": "off",
+      "class-methods-use-this": "off"
     }
 }
