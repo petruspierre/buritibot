@@ -4,6 +4,7 @@ import fs from 'fs';
 import { resolve } from 'path';
 import Discord from 'discord.js';
 import TelegramBot from 'node-telegram-bot-api';
+import YouTube from 'youtube-node';
 
 import listenEvents from './events';
 
@@ -15,6 +16,9 @@ intents.add('GUILDS', 'GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUI
 const telegramBot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
 const discordClient = new Discord.Client({ ws: { intents } });
 discordClient.commands = new Discord.Collection();
+
+const youtube = new YouTube();
+youtube.setKey(process.env.YOUTUBE_KEY);
 
 const commandDir = fs.readdirSync(resolve(__dirname, 'commands'));
 
@@ -30,6 +34,6 @@ discordClient.once('ready', () => {
   console.log('-> Buriti online ✅');
 });
 
-listenEvents(discordClient, telegramBot);
+listenEvents(discordClient, telegramBot, youtube);
 
 discordClient.login(process.env.TOKEN);

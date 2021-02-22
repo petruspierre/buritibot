@@ -5,6 +5,7 @@ module.exports = {
   category: 'Música',
   guildOnly: true,
   cooldown: 3,
+  disabled: true,
   async execute(client, message, args, serverQueue, queue, youtube) {
     const voiceChannel = message.member.voice.channel;
 
