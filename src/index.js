@@ -1,3 +1,5 @@
+import './database';
+
 import fs from 'fs';
 import { resolve } from 'path';
 import Discord from 'discord.js';
@@ -7,8 +9,11 @@ import listenEvents from './events';
 
 require('dotenv').config();
 
+const intents = new Discord.Intents();
+intents.add('GUILDS', 'GUILD_PRESENCES', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_MESSAGE_REACTIONS', 'GUILD_VOICE_STATES', 'GUILD_WEBHOOKS', 'GUILD_EMOJIS');
+
 const telegramBot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
-const discordClient = new Discord.Client();
+const discordClient = new Discord.Client({ ws: { intents } });
 discordClient.commands = new Discord.Collection();
 
 const commandDir = fs.readdirSync(resolve(__dirname, 'commands'));
