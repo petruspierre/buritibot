@@ -11,9 +11,9 @@ class Database {
   }
 
   init() {
-    const databaseConfig = process.env.NODE_ENV === 'development'
-      ? databaseConfigs.development
-      : databaseConfigs.production;
+    const databaseConfig = process.env.NODE_ENV === 'production'
+      ? databaseConfigs.production
+      : databaseConfigs.development;
 
     console.log(process.env.NODE_ENV);
     console.log(databaseConfig);
