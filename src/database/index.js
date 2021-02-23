@@ -16,6 +16,7 @@ class Database {
       : databaseConfigs.development;
 
     console.log(process.env.NODE_ENV);
+    console.log(process.env.DATABASE_URL);
     console.log(databaseConfig);
 
     this.connection = new Sequelize(databaseConfig);

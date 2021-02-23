@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     dialect: 'postgres',
-    host: process.env.DATABASE_URL,
+    host: process.env.DATABASE_HOST,
     username: 'postgres',
     password: 'docker',
     database: 'buriti',
@@ -14,6 +14,7 @@ module.exports = {
   production: {
     dialect: 'postgres',
     use_env_variable: 'DATABASE_URL',
+    host: process.env.DATABASE_HOST,
     dialectOptions: {
       ssl: {
         require: true,
