@@ -10,7 +10,7 @@ class GuildController {
   async create(guild) {
     const { id, name } = guild;
 
-    const alreadyExists = Guild.findByPk(id);
+    const alreadyExists = await Guild.findByPk(id);
     if (!alreadyExists) {
       await Guild.create({ id, name });
     }
