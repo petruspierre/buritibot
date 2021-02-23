@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 
 import Guild from '../models/Guild';
-import databaseConfig from '../config/database';
+import databaseConfigs from '../config/database';
 
 const models = [Guild];
 
@@ -11,11 +11,14 @@ class Database {
   }
 
   init() {
-    this.connection = new Sequelize(
-      process.env.NODE_ENV === 'development'
-        ? databaseConfig.development
-        : databaseConfig.production,
-    );
+    const databaseConfig = process.env.NODE_ENV === 'development'
+      ? databaseConfigs.development
+      : databaseConfigs.production;
+
+    console.log(process.env.NODE_ENV);
+    console.log(databaseConfig);
+
+    this.connection = new Sequelize(databaseConfig);
 
     models.map((model) => model.init(this.connection));
   }
