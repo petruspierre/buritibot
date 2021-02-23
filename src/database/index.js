@@ -20,6 +20,15 @@ class Database {
 
     this.connection = new Sequelize(databaseConfig);
 
+    this.connection
+      .authenticate()
+      .then(() => {
+        console.log('Connection has been established successfully.');
+      })
+      .catch((err) => {
+        console.error('Unable to connect to the database:', err);
+      });
+
     models.map((model) => model.init(this.connection));
   }
 }
