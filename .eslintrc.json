@@ -28,6 +28,7 @@
       "no-unused-expressions": "off",
       "no-nested-ternary": "off",
       "no-useless-escape": "off",
-      "class-methods-use-this": "off"
+      "class-methods-use-this": "off",
+      "import/prefer-default-export": "off"
     }
 }
