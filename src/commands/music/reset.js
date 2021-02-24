@@ -1,10 +1,10 @@
 module.exports = {
-  name: 'skip',
-  aliases: ['sk', 'pular'],
-  description: 'Pula a música que está tocando.',
+  name: 'reset',
+  aliases: ['r'],
+  description: 'Reseta a fila (serve para desbugar o bot).',
   category: 'Música',
   guildOnly: true,
-  cooldown: 2,
+  cooldown: 3,
   disabled: true,
   async execute(client, message, args, serverQueue, queue, youtube) {
     const voiceChannel = message.member.voice.channel;
@@ -15,10 +15,7 @@ module.exports = {
       );
     }
 
-    if (serverQueue) {
-      serverQueue.connection.dispatcher.end();
-      return message.channel.send('Pulando a música atual');
-    }
-    return message.channel.send('Não estou tocando nada no momento!');
+    serverQueue = {};
+    return message.channel.send('Resetando!');
   },
 };

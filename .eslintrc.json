@@ -26,6 +26,8 @@
       "no-await-in-loop": "off",
       "prefer-destructuring": "off",
       "no-unused-expressions": "off",
-      "no-nested-ternary": "off"
+      "no-nested-ternary": "off",
+      "no-useless-escape": "off",
+      "class-methods-use-this": "off"
     }
 }

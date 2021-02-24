@@ -15,7 +15,7 @@ module.exports = {
 
     const messages = [
       'fã da manu gavassi',
-      'bonito demais',
+      'bonitx demais',
       'não bebeu água hoje',
       'é hetero',
       'não tomou banho hoje',

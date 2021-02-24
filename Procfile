@@ -1,1 +1,1 @@
-worker: node src/index.js
+worker: sucrase-node src/index.js

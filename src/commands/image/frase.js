@@ -1,6 +1,17 @@
 const { Canvas } = require('canvas-constructor');
 const fetch = require('node-fetch');
 
+const backgrounds = [
+  'https://i.ibb.co/Wsdcd2x/berti.png',
+  'https://i.ibb.co/B3f3gJW/philo.png',
+  'https://i.ibb.co/9gkQy9N/chaves.png',
+  'https://i.ibb.co/k5qJ2LD/edukof.png',
+  'https://i.ibb.co/fv7bNw8/tony-stark.png',
+  'https://i.ibb.co/yYfCNDJ/dilma.png',
+  'https://i.ibb.co/CWtnVvt/holt.png',
+  'https://i.ibb.co/0jfQbxp/gilbala.png',
+];
+
 module.exports = {
   name: 'frase',
   aliases: ['frase', 'cita'],
@@ -9,18 +20,8 @@ module.exports = {
   category: 'Imagem',
   cooldown: 10,
   args: true,
+  telegram: true,
   async execute(_, message, args) {
-    const backgrounds = [
-      'https://i.ibb.co/Wsdcd2x/berti.png',
-      'https://i.ibb.co/B3f3gJW/philo.png',
-      'https://i.ibb.co/9gkQy9N/chaves.png',
-      'https://i.ibb.co/k5qJ2LD/edukof.png',
-      'https://i.ibb.co/fv7bNw8/tony-stark.png',
-      'https://i.ibb.co/yYfCNDJ/dilma.png',
-      'https://i.ibb.co/CWtnVvt/holt.png',
-      'https://i.ibb.co/0jfQbxp/gilbala.png',
-    ];
-
     const index = Math.floor(Math.random() * backgrounds.length);
 
     const bg = await fetch(backgrounds[index]);
@@ -56,7 +57,7 @@ module.exports = {
       .addCircularImage(await avatar.buffer(), 480, 150, 80)
       .setColor('#fff')
       .setTextSize(24)
-      .addText(target.user.username, 30, 255, 100)
+      .addText(target.nickname || target.user.username, 30, 255, 100)
       .setTextSize(30)
       .addWrappedText(`— ${args.slice(1).join(' ')}`, 30, 80, 300)
       .toBuffer();
@@ -64,6 +65,23 @@ module.exports = {
     message.channel.send({ files: [img] }).catch((err) => {
       console.log(err);
       message.reply('não consegui fazer esta imagem');
+    });
+  },
+  async execute_telegram(bot, msg, args) {
+    const index = Math.floor(Math.random() * backgrounds.length);
+
+    const bg = await fetch(backgrounds[index]);
+    const bgBuffer = await bg.buffer();
+
+    const img = new Canvas(600, 315)
+      .addImage(bgBuffer, 0, 0, 600, 315)
+      .setTextSize(30)
+      .setColor('#fff')
+      .addWrappedText(`— ${args.join(' ')}`, 30, 80, 300)
+      .toBuffer();
+
+    bot.sendPhoto(msg.chat.id, img).catch((err) => {
+      bot.sendMessage(msg.chat.id, 'Não consegui fazer esta imagem');
     });
   },
 };

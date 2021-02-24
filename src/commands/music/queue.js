@@ -8,6 +8,7 @@ module.exports = {
   category: 'Música',
   guildOnly: true,
   cooldown: 2,
+  disabled: true,
   async execute(client, message, args, serverQueue, queue, youtube) {
     if (serverQueue) {
       const embed = new MessageEmbed()
