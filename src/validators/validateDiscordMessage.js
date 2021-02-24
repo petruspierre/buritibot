@@ -1,8 +1,8 @@
 import Discord from 'discord.js';
 
-import { prefix, defaultCooldown } from '../../config.json';
+function validateDiscordMessage(message, client, cooldowns, databaseGuild) {
+  const { prefix, defaultCooldown, alertCommandDontExist } = databaseGuild;
 
-function validateDiscordMessage(message, client, cooldowns) {
   if (!message.content.startsWith(prefix) || message.author.bot) return false;
 
   const args = message.content.slice(prefix.length).split(/ +/);
@@ -12,7 +12,9 @@ function validateDiscordMessage(message, client, cooldowns) {
     || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 
   if (!command) {
-    message.reply('não entendi, tem certeza que esse comando existe?');
+    if (alertCommandDontExist) {
+      message.reply('não entendi, tem certeza que esse comando existe?');
+    }
     return false;
   }
 

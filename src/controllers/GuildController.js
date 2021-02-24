@@ -7,12 +7,24 @@ class GuildController {
     return { guilds };
   }
 
+  async show(id) {
+    const guild = await Guild.findByPk(id);
+
+    return guild;
+  }
+
+  async update(id, payload) {
+    const guild = await Guild.findByPk(id);
+
+    const updatedGuild = await guild.update(payload);
+
+    return updatedGuild;
+  }
+
   async create(guild) {
     const { id, name } = guild;
 
-    console.log('Searching Guild');
     const alreadyExists = await Guild.findByPk(id);
-    console.log('Creating Guild');
     if (!alreadyExists) {
       await Guild.create({ id, name });
     }
