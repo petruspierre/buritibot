@@ -1,5 +1,5 @@
-const { MessageEmbed } = require('discord.js');
-const { prefix, defaultCooldown } = require('../../../config.json');
+import { MessageEmbed } from 'discord.js';
+import GuildController from '../../controllers/GuildController';
 
 module.exports = {
   name: 'ajuda',
@@ -9,20 +9,22 @@ module.exports = {
   category: 'Util',
   cooldown: 3,
   telegram: true,
-  execute(_, message, args) {
+  async execute(client, message, args) {
     const data = [];
     const { commands } = message.client;
+
+    const { prefix } = await GuildController.show(message.guild.id);
 
     if (!args.length) {
       data.push('Aqui vai a lista de comandos:');
 
       let lastCategory = '';
-      commands.forEach((command, index) => {
+      commands.forEach((command) => {
         if (lastCategory !== command.category) {
           lastCategory = command.category;
           data.push(`\nCategoria: **${lastCategory}**`);
         }
-        data.push(`\`+${command.name}\` - ${command.description}`);
+        data.push(`\`${prefix}${command.name}\` - ${command.description}`);
       });
       data.push(`\nVocê pode também usar \`${prefix}ajuda [comando]\` para obter informações de um comando específico`);
 
@@ -56,7 +58,7 @@ module.exports = {
       embed.addField('Intervalo de uso:', `**${command.cooldown}** segundos`);
     }
     if (command.aliases) {
-      embed.addField('Sinônimos:', `\`+${(command.aliases).join('`, +`')}\``);
+      embed.addField('Sinônimos:', `${prefix}\`${(command.aliases).join(`\`, ${prefix}\``)}\``);
     }
     if (command.flags) {
       embed.addField('Flags:', `\`${(command.flags).join('`, `')}\`\nPara usar as flags, insira no **final** do comando!`);
@@ -71,14 +73,14 @@ module.exports = {
       data.push('Aqui vai a lista de comandos:');
 
       let lastCategory = '';
-      commands.forEach((command, index) => {
+      commands.forEach((command) => {
         if (lastCategory !== command.category) {
           lastCategory = command.category;
           data.push(`\nCategoria: *${lastCategory}*`);
         }
         data.push(`\`\`\`+${command.name} - ${command.description}\`\`\``);
       });
-      data.push(`\nVocê pode também usar \`\`\`${prefix}ajuda [comando]\`\`\` para obter informações de um comando específico`);
+      data.push('\nVocê pode também usar ```+ajuda [comando]``` para obter informações de um comando específico');
 
       return bot.sendMessage(msg.chat.id, data.join('\n'), { parse_mode: 'Markdown' });
     }
@@ -93,7 +95,7 @@ module.exports = {
 
     let newData = `Informação de comando - \`\`\`${command.name}\`\`\`\n\n`;
     newData += command.description;
-    newData += `\n\n*Como usar:*\n \`\`\`${prefix}${command.name} ${command.usage}\`\`\``;
+    newData += `\n\n*Como usar:*\n \`\`\`+${command.name} ${command.usage}\`\`\``;
 
     if (command.cooldown) {
       newData += `\n\n*Intervalo de uso:*\n *${command.cooldown}* segundos`;
