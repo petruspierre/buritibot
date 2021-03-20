@@ -70,6 +70,7 @@ module.exports = {
         message.reply('Um bingo já está sendo iniciado ou em está andamento!');
       }
     } else if (args[0] === 'next') {
+      message.delete();
       if (!serverGame) {
         serverGame = bingo.get('548636877675298816');
       }
@@ -108,7 +109,7 @@ module.exports = {
         66: ' um tapa atrás da orelha 👂',
       };
 
-      serverGame.channel.send('<a:thinkloading:798217543236059186> Sorteando...').then((msg) => {
+      serverGame.channel.send('<a:thinkloading:798334868819804163> Sorteando...').then((msg) => {
         setTimeout(() => {
           let formatedNumber = '';
           const stringNumber = String(number);

@@ -10,10 +10,6 @@ const cooldowns = new Discord.Collection();
 
 function listenDiscordCommands(client, youtube) {
   client.on('message', async (message) => {
-    if (message.channel.type !== 'text') {
-      message.reply('No momento respondendo a comandos apenas em servidores!');
-    }
-
     const databaseGuild = guildCamelCase(await GuildController.show(message.guild.id));
 
     if (!validateDiscordMessage(message, client, cooldowns, databaseGuild)) return;
@@ -42,10 +38,9 @@ function listenDiscordCommands(client, youtube) {
         let serverBingo;
         if (message.channel.type !== 'dm') {
           serverBingo = bingo.get(message.guild.id);
+        } else {
+          serverBingo = bingo.get('548636877675298816');
         }
-        // else {
-        //   serverBingo = bingo.get(serverID);
-        // }
         command.execute(client, message, args, serverBingo, bingo);
       } else {
         command.execute(client, message, args);

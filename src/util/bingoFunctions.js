@@ -16,7 +16,7 @@ const createPlayer = (user) => {
 
   const userData = {
     user,
-    numbers: hand,
+    numbers: hand.sort((a, b) => a - b),
   };
 
   return userData;
@@ -25,14 +25,14 @@ const createPlayer = (user) => {
 const start = async (serverGame) => {
   const { users, channel } = serverGame;
 
-  const bg = await fetch('https://i.ibb.co/HP0yZvv/bingo300.png');
+  const bg = await fetch('https://i.ibb.co/rdNNGJ3/Bingo-nada-generico-365.png');
   const bgBuffer = await bg.buffer();
 
   users.forEach(({ user, numbers }) => {
     const img = new Canvas(610, 409)
       .addImage(bgBuffer, 0, 0, 610, 409)
       .setTextSize(30)
-      .setColor('#000')
+      .setColor('#fff')
       .setTextAlign('center')
       .addText(numbers[0], 120, 115)
       .addText(numbers[1], 210, 115)

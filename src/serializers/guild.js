@@ -1,4 +1,5 @@
 function guildCamelCase(guild) {
+  if (!guild.prefix) guild.prefix = '+';
   return {
     prefix: guild.prefix,
     wellcomeMessage: guild.wellcome_message,
