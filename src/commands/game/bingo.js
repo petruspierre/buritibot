@@ -138,8 +138,9 @@ module.exports = {
       const embed = new MessageEmbed()
         .setTitle('Números sorteados')
         .setDescription('Nessa mensagem serão exibidos os números sorteados. Fique atento.')
-        .addField('Todos', serverGame.previousNumbers.join(' - ') || 'Nenhum número foi sorteado, aguarde.')
-        .addField('Último', serverGame.previousNumbers[serverGame.previousNumbers.length - 1] || 'Nenhum número foi sorteado, aguarde.');
+        .addField('Todos', serverGame.previousNumbers.sort((a, b) => a - b).join(' - ') || 'Nenhum número foi sorteado, aguarde.')
+        .addField('Último', serverGame.previousNumbers[serverGame.previousNumbers.length - 1] || 'Nenhum número foi sorteado, aguarde.')
+        .addField('Sorteados', serverGame.previousNumbers.length);
 
       setTimeout(() => {
         serverGame.allNumbersMessage.edit(embed);
