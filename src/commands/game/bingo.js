@@ -11,9 +11,9 @@ module.exports = {
   disabled: false,
   cooldown: 3,
   async execute(_, message, args, serverGame, bingo) {
+    const guildID = message.guild.id;
     if (args[0] === 'start') {
-      const channel = message.guild.channels.cache.find((ch) => ch.name === '👴🏽│bingo');
-      const guildID = message.guild.id;
+      const channel = message.guild.channels.cache.find((ch) => ch.name.includes('bingo'));
       message.delete();
       if (!serverGame) {
         const gameContract = {
@@ -71,8 +71,13 @@ module.exports = {
       }
     } else if (args[0] === 'next') {
       message.delete();
+
       if (!serverGame) {
-        serverGame = bingo.get('548636877675298816');
+        return message.reply('Não há nenhum jogo em andamento por aqui.');
+      }
+
+      if (message.author.id !== serverGame.starter) {
+        return message.reply('Apenas o jogador que iniciou o bingo pode executar este comando!');
       }
 
       let number;
@@ -100,23 +105,23 @@ module.exports = {
         11: '🚶🏻🚶🏻 Um atrás do outro!',
         13: 'Viniccius',
         22: '🦆🦆 Dois patinhos na lagoa!',
-        44: '🦶🏻 Pé de marcelo!',
+        // 44: '🦶🏻 Pé de marcelo!',
         45: '⚽ Fim do primeiro tempo!',
       };
 
       const sufix = {
-        7: ' grande homem. 🙇',
+        // 7: ' grande homem. 🙇',
         66: ' um tapa atrás da orelha 👂',
       };
 
-      serverGame.channel.send('<a:thinkloading:798334868819804163> Sorteando...').then((msg) => {
+      serverGame.channel.send('Sorteando...').then((msg) => {
         setTimeout(() => {
           let formatedNumber = '';
           const stringNumber = String(number);
           if (stringNumber === '8') {
             formatedNumber = '🎱';
           } else if (stringNumber === '17') {
-            formatedNumber = '1️⃣6️⃣ ➕ 1️⃣';
+            formatedNumber = '1️⃣6️⃣ + 1️⃣';
           } else {
             for (let i = 0; i < stringNumber.length; i += 1) {
               if (stringNumber[i] === '0') {
@@ -145,6 +150,13 @@ module.exports = {
       setTimeout(() => {
         serverGame.allNumbersMessage.edit(embed);
       }, 1500);
+    } else if (args[0] === 'stop') {
+      if (!serverGame) {
+        message.reply('Não tem nenhum jogo em andamento.');
+      } else {
+        bingo.set(guildID);
+        message.reply('O bingo foi finalizado com sucesso! Agora você pode iniciar outro jogo.');
+      }
     }
   },
 };
